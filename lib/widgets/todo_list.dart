@@ -3,14 +3,20 @@ import 'package:sqflite_temp2/models/db_model.dart';
 import 'package:sqflite_temp2/widgets/todo_card.dart';
 
 class TodoList extends StatelessWidget {
+  final Function insertFunction;
+  final Function deleteFunction;
+
   final db = DatabaseConnect();
-  TodoList({Key? key}) : super(key: key);
+  TodoList(
+      {required this.insertFunction, required this.deleteFunction, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: FutureBuilder(
         future: db.getTodo(),
+        initialData: const [],
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           var data = snapshot.data;
           var datalength = data!.length;
@@ -22,15 +28,32 @@ class TodoList extends StatelessWidget {
               : ListView.builder(
                   itemCount: datalength,
                   itemBuilder: (context, i) => Todocard(
-                    id: data[i].id,
-                    title: data[i].title,
-                    creationDate: data[i].creationDate,
-                    isChecked: data[i].isChecked,
-                    insertFunction: () {},
-                    deleteFunction: () {},
-                  ),
-                );
-        },
+                        id: snapshot.data![i].id,
+                        title: snapshot.data![i].title,
+                        creationDate: snapshot.data![i].creationDate,
+                        isChecked: snapshot.data![i].isChecked,
+                        insertFunction: insertFunction,
+                        deleteFunction: deleteFunction,
+                      ));
+        }
+        // if (!snapshot.hasData) {
+        //   const Center(
+        //     child: Text('no data found'),
+        //   );
+        // } else {
+        //   return ListView.builder(
+        //     itemCount: snapshot.data!.length,
+        //     itemBuilder: (context, i) => Todocard(
+        //       id: snapshot.data![i].id,
+        //       title: snapshot.data![i].title,
+        //       creationDate: snapshot.data![i].creationDate,
+        //       isChecked: snapshot.data![i].isChecked,
+        //       insertFunction: insertFunction,
+        //       deleteFunction: deleteFunction,
+        //     ),
+        //   );
+        // }
+        ,
       ),
     );
   }

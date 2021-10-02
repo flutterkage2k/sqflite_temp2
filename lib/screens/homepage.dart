@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_temp2/models/db_model.dart';
+import 'package:sqflite_temp2/models/todo_model.dart';
 import 'package:sqflite_temp2/widgets/todo_list.dart';
 import 'package:sqflite_temp2/widgets/user_input.dart';
 
@@ -10,6 +12,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final db = DatabaseConnect();
+
+  void addItem(Todo todo) async {
+    await db.insertTodo(todo);
+    setState(() {});
+  }
+
+  void deleteItem(Todo todo) async {
+    await db.deleteTodo(todo);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +32,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          TodoList(),
-          UserInput(),
+          TodoList(
+            insertFunction: addItem,
+            deleteFunction: deleteItem,
+          ),
+          UserInput(
+            insertFunction: addItem,
+          ),
         ],
       ),
     );

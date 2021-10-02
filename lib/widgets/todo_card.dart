@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sqflite_temp2/models/todo_model.dart';
 
 class Todocard extends StatefulWidget {
   final int id;
@@ -25,6 +27,12 @@ class Todocard extends StatefulWidget {
 class _TodocardState extends State<Todocard> {
   @override
   Widget build(BuildContext context) {
+    var anotherTodo = Todo(
+        id: widget.id,
+        title: widget.title,
+        creationDate: widget.creationDate,
+        isChecked: widget.isChecked);
+
     return Card(
       child: Row(
         children: [
@@ -36,6 +44,8 @@ class _TodocardState extends State<Todocard> {
                 setState(() {
                   widget.isChecked = value!;
                 });
+                anotherTodo.isChecked = value!;
+                widget.insertFunction(anotherTodo);
               },
             ),
           ),
@@ -43,16 +53,18 @@ class _TodocardState extends State<Todocard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'title text',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                Text(
+                  widget.title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  'date',
-                  style: TextStyle(
+                Text(
+                  DateFormat('dd MMM yyyy - hh:mm aaa')
+                      .format(widget.creationDate),
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff8f8f8f),
@@ -61,7 +73,12 @@ class _TodocardState extends State<Todocard> {
               ],
             ),
           ),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.close))
+          IconButton(
+            onPressed: () {
+              widget.deleteFunction(anotherTodo);
+            },
+            icon: const Icon(Icons.close),
+          )
         ],
       ),
     );
