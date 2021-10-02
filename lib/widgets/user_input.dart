@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserInput extends StatelessWidget {
-  var textController = TextEditingController();
+  final textController = TextEditingController();
   UserInput({Key? key}) : super(key: key);
 
   @override
@@ -16,12 +16,12 @@ class UserInput extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: TextField(
                 controller: textController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: 'add new todo', border: InputBorder.none),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           GestureDetector(
@@ -29,7 +29,7 @@ class UserInput extends StatelessWidget {
             child: Container(
               color: Colors.red,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: Text(
+              child: const Text(
                 'Add',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_temp2/widgets/todo_list.dart';
 import 'package:sqflite_temp2/widgets/user_input.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,10 +14,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Simple todo app'),
+        title: const Text('Simple todo app'),
       ),
       body: Column(
         children: [
+          TodoList(),
           UserInput(),
         ],
       ),
