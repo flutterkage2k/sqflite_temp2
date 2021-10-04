@@ -24,6 +24,15 @@ class DatabaseConnect {
         title TEXT,
         creationDate TEXT,
         isChecked INTEGER
+        FK_todo_category STRING NOT NULL,
+        FOREIGN KEY (FK_todo_category) REFERENCES category (categoryid)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE category(
+        categoryId INTEGER PRIMARY KEY AUTOINCREMENT,
+        categoryName STRING NOT NULL
       )
     ''');
   }
