@@ -9,10 +9,16 @@ class Category {
     name = obj['categoryName'];
   }
 
+  // Map<String, dynamic> toMap() {
+  //   var map = <String, dynamic>{
+  //     'categoryName': name,
+  //   };
+  //   return map;
+  // }
+
   Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
+    return {
       'categoryName': name,
     };
-    return map;
   }
 }
